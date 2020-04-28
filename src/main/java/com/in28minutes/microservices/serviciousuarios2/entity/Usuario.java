@@ -9,7 +9,7 @@ import java.util.List;
 public class Usuario implements Serializable {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(unique = true,length = 20)
@@ -27,19 +27,19 @@ public class Usuario implements Serializable {
     @Column(unique = true,length = 100)
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+   // @ManyToMany(fetch = FetchType.LAZY)
     // La tabla intermedia se crea automaticamente (usuarios_roles) Nombres tablas + _
     // Las claves foráneas de la tabla intermedia
     // usuario_id (Nombre clase dominante + _id)
     // roles_id (Nombre del atributo en la clase dominante -no nombre Clase Role- + _id)
     // Para modificar lo que se crea por defecto se usa @JoinTable
     // uniqueConstraints  para hacer una clave unica compuesta (No se puede repetir usuario y role
-    @JoinTable(
+    /*@JoinTable(
             name="usuarios_to_roles",
             joinColumns = @JoinColumn (name="usuario_id"), inverseJoinColumns = @JoinColumn(name="role_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id","role_id"})}
     )
-    private List<Role> roles;
+    private List<Role> roles;*/
 
     public Long getId() {
         return id;
@@ -97,11 +97,11 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
-    public List<Role> getRoles() {
+   /* public List<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
-    }
+    }*/
 }

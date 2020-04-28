@@ -15,8 +15,8 @@ public class UsuarioController {
     UsuarioRepository repo;
 
     @GetMapping("/usuarios")
-    public Usuario getUsuario(){
+    public List<Usuario> getUsuario(){
 
-        return repo.findByUsername("usuario_agu");
+        return repo.findAll();
     }
 }
