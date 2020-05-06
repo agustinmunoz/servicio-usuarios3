@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 
 public class UsuarioController {
 
@@ -18,7 +19,6 @@ public class UsuarioController {
     UsuarioRepository repo;
 
     @GetMapping("/usuarios")
-    @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
     public List<Usuario> getUsuario(){
 
         return repo.findAll();

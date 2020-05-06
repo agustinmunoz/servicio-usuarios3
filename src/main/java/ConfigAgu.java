@@ -10,13 +10,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-@Configuration
+
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ConfigAgu extends WebSecurityConfigurerAdapter {
 
 
-  @Bean
+ /* @Bean
   public FilterRegistrationBean corsFilter() {
     final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     CorsConfiguration config = new CorsConfiguration();
@@ -28,15 +27,18 @@ public class ConfigAgu extends WebSecurityConfigurerAdapter {
     FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
     bean.setOrder(0);
     return bean;
-  }
+  }*/
 
 
   @Override
-  protected void configure(HttpSecurity httpSecurity) throws Exception {
-    httpSecurity
+  protected void configure(HttpSecurity http) throws Exception {
+    http
       .authorizeRequests()
-      .antMatchers(HttpMethod.OPTIONS, "/**").permitAll(); // **permit OPTIONS call to all**
+      .anyRequest().authenticated()
+      .and()
+      .httpBasic();
 
+    http.cors();
   }
 
 
