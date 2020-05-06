@@ -22,6 +22,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class ConfigAgu extends WebSecurityConfigurerAdapter {
 
@@ -44,11 +45,13 @@ public class ConfigAgu extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
+      .csrf().disable()
+      .cors().disable()
       .authorizeRequests()
       .requestMatchers(CorsUtils::isCorsRequest).permitAll()
       .anyRequest().authenticated()
-      .and().httpBasic()
-      .and().addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class);
+      .and().httpBasic();
+      //.and().addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class);
   }
 
 
