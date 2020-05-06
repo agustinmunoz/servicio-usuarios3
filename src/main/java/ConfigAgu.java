@@ -9,8 +9,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.web.cors.CorsConfiguration;
+
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.Filter;
@@ -21,9 +24,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
+@Configuration
 public class ConfigAgu extends WebSecurityConfigurerAdapter {
 
 
@@ -41,20 +46,37 @@ public class ConfigAgu extends WebSecurityConfigurerAdapter {
     return bean;
   }*/
 
+ /* @Bean
+  CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(Arrays.asList("https://example.com"));
+    configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+  }*/
 
-  @Override
+
+
+
+ /* @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
       .csrf().disable()
-      .cors().disable()
+      .cors().getClass(corsConfigurationSource())
       .authorizeRequests()
       .requestMatchers(CorsUtils::isCorsRequest).permitAll()
       .anyRequest().authenticated()
       .and().httpBasic();
       //.and().addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class);
+  }*/
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class);
+    http.authorizeRequests().antMatchers("/").permitAll().anyRequest().fullyAuthenticated().and().httpBasic().and()
+      .csrf().disable();
   }
-
-
 
 }
 
