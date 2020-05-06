@@ -61,24 +61,25 @@ public class ConfigAgu extends WebSecurityConfigurerAdapter {
 
 
 
- /* @Override
+  @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
       .csrf().disable()
-      .cors().getClass(corsConfigurationSource())
+      .addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class)
       .authorizeRequests()
-      .requestMatchers(CorsUtils::isCorsRequest).permitAll()
+      .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
       .anyRequest().authenticated()
       .and().httpBasic();
       //.and().addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class);
-  }*/
+  }
 
-  @Override
+  /*@Override
   protected void configure(HttpSecurity http) throws Exception {
     http.addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class);
+    http.requestMatchers(CorsUtils::isCorsRequest).permitAll();
     http.authorizeRequests().antMatchers("/").permitAll().anyRequest().fullyAuthenticated().and().httpBasic().and()
       .csrf().disable();
-  }
+  }*/
 
 }
 
