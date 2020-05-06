@@ -1,3 +1,4 @@
+import com.in28minutes.microservices.serviciousuarios2.WebSecurityCorsFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -6,10 +7,20 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @EnableWebSecurity
 public class ConfigAgu extends WebSecurityConfigurerAdapter {
@@ -34,13 +45,14 @@ public class ConfigAgu extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
       .authorizeRequests()
+      .requestMatchers(CorsUtils::isCorsRequest).permitAll()
       .anyRequest().authenticated()
-      .and()
-      .httpBasic();
-
-    http.cors();
+      .and().httpBasic()
+      .and().addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class);
   }
 
 
 
 }
+
+
