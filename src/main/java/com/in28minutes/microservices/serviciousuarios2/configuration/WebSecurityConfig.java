@@ -22,24 +22,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       .and()
       .authorizeRequests()
-      .antMatchers("/**").permitAll()
-      .and()
-      .httpBasic();*/
+      .antMatchers("/**").permitAll();*/
 
-      http
-        .csrf().disable()
-        .authorizeRequests()
-        .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-          .anyRequest().authenticated()
-          .and()
-        .httpBasic();
+
+    http
+      .csrf().disable()
+      .authorizeRequests()
+      .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+      .anyRequest().authenticated()
+      .and()
+      .httpBasic();
+
+
 
   }
 
-  /*@Bean
+  @Bean
   CorsConfigurationSource corsConfigurationSource() {
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
     return source;
-  }*/
+  }
 }
