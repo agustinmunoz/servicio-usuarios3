@@ -1,9 +1,13 @@
 package com.in28minutes.microservices.serviciousuarios2.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 public class SecurityConfigAgu extends WebSecurityConfigurerAdapter {
@@ -21,6 +25,8 @@ public class SecurityConfigAgu extends WebSecurityConfigurerAdapter {
 
 
     http
+      .cors()
+      .and()
       .csrf().disable()
       .authorizeRequests()
       .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
@@ -32,7 +38,12 @@ public class SecurityConfigAgu extends WebSecurityConfigurerAdapter {
 
   }
 
-
+ @Bean
+ CorsConfigurationSource corsConfigurationSource() {
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+    return source;
+  }
 
 
 }
