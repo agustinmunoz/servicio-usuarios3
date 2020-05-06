@@ -37,9 +37,9 @@ public class ConfigAgu implements WebMvcConfigurer {
 
   @Override public void addCorsMappings(CorsRegistry registry) {
 
-    registry.addMapping("/**")
+    registry.addMapping("/")
       .allowedOrigins(
-        "http://localhost:4200")
+        "http://localhost:4200/basicauthentication")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
       .allowCredentials(true)
     ;
