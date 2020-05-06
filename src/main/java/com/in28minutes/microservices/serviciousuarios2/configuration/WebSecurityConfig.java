@@ -15,23 +15,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-   /* http
+   http
       .cors()
       .and()
       .csrf().disable()
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       .and()
       .authorizeRequests()
-      .antMatchers("/**").permitAll();*/
+      .antMatchers("/**").permitAll();
 
 
-    http
+   /* http
       .csrf().disable()
       .authorizeRequests()
       .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
       .anyRequest().authenticated()
       .and()
-      .httpBasic();
+      .httpBasic();*/
 
 
 
