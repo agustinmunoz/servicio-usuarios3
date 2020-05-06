@@ -16,6 +16,8 @@ import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -31,56 +33,19 @@ import java.util.Arrays;
 @EnableWebSecurity
 @Configuration
 @CrossOrigin(origins= "*")
-public class ConfigAgu extends WebSecurityConfigurerAdapter {
+public class ConfigAgu implements WebMvcConfigurer {
 
+  @Override public void addCorsMappings(CorsRegistry registry) {
 
- /* @Bean
-  public FilterRegistrationBean corsFilter() {
-    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    CorsConfiguration config = new CorsConfiguration();
-    config.setAllowCredentials(true);
-    config.addAllowedOrigin("*"); // @Value: http://localhost:8080
-    config.addAllowedHeader("*");
-    config.addAllowedMethod("*");
-    source.registerCorsConfiguration("/**", config);
-    FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-    bean.setOrder(0);
-    return bean;
-  }*/
-
- /* @Bean
-  CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(Arrays.asList("https://example.com"));
-    configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
-  }*/
-
-
-
-
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http
-      .csrf().disable()
-      .addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class)
-      .authorizeRequests()
-      .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-      .anyRequest().authenticated()
-      .and().httpBasic();
-      //.and().addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class);
+    registry.addMapping("/**")
+      .allowedOrigins(
+        "http://localhost:4200")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
+      .allowCredentials(true)
+    ;
   }
 
-  /*@Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class);
-    http.requestMatchers(CorsUtils::isCorsRequest).permitAll();
-    http.authorizeRequests().antMatchers("/").permitAll().anyRequest().fullyAuthenticated().and().httpBasic().and()
-      .csrf().disable();
-  }*/
-
 }
+
 
 
