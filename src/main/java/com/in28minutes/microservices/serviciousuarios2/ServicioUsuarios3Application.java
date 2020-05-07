@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 //@EnableDiscoveryClient
-public class ServicioUsuarios2Application {
+public class ServicioUsuarios3Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ServicioUsuarios2Application.class, args);
+		SpringApplication.run(ServicioUsuarios3Application.class, args);
 	}
 
 }
