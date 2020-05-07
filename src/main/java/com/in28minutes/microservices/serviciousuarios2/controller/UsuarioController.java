@@ -26,7 +26,7 @@ public class UsuarioController {
     }
 
 
-    @GetMapping("/usuarios/username/{username}")
+    @GetMapping("/username/{username}")
     public Usuario getUsuario(@PathVariable("username") String username){
 
         return repo.findByUsername(username);
