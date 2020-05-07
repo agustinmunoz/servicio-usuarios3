@@ -11,11 +11,14 @@ import org.springframework.data.repository.query.Param;
 //@RepositoryRestResource(path = "usuarios")
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
+
+
+
     //el path de los método añadidos es usuarios/search/[nombreMétodo] ó
     //se especifica mediante path
     //usuarios/search/[path] (usuarios/search/apellido?apellido1=usuario_agu
 
-  //  public Usuario findByUsername(String username);
+    public Usuario findByUsername(String username);
 
 
 }
